@@ -1,0 +1,209 @@
+                                     GRADER
+
+Name of student running submit: Josh Weaver	
+Login of student running submit: jowe2207
+
+Second team member's name (if any): Jiaxin Lin
+Second team member's login: jili5814
+
+Third team member's name (if any):
+Third team member's login:
+
+IMPORTANT:  Only one team member should submit their project to the moodle.
+If a different teammate must submit, inform me (John Black) via email 
+all the details.  Include a complete list of team members, and let me know
+which submission you want graded.
+
+If you've submitted your project once, or even written a substantial amount of
+code together, you may not change partners without the permission of the
+instructor.
+===============================================================================
+Does your program compile without errors?
+Yes
+
+Have you tested your program on the machines in the CSEL or VM?
+Yes
+
+Did you successfully implement game tree search?
+Yes
+
+Did you successfully implement alpha-beta pruning?
+No 
+
+Are there any limitations on it?
+No  
+
+What is the default number of search levels set by the one-parameter MachinePlayer
+constructor?
+1
+
+Describe your board evaluation function in some detail.
+We give score to a certain move.
+Score assignment:
+1.if the other color win after this step, give a -50 score (must be judged before 2)
+2.if the color will win, score 100
+3.(1)if the current move has a same color neigbor arround it,add 8 to every neighbor
+  	*if the neighbor is next to it, only add 6 (easy to form cluster)
+ 	*if we find a neighbor in a given direction, 
+		then we -1 everytimewe we find another in the same direction
+  (2)if this move will add a block to the opponent color (move is between two opponent chips),
+     add add 2 in ADD or 6 in STEP for each line
+4. if it's in a goal area and it's the only chip in this goal area after the step, add 8 to the score, if there're 2, add 6.
+
+Does your MachinePlayer use any special method of choosing the first few moves?
+Yes, it takes random moves for the first 2 moves. And it treat add move and step move differently. In step move, it cares more about blocking white forming network,
+and it in the beginning, it tends to add a chip to an empty goal area or a goal area with only one chip.
+
+Is there anything else the graders should know to help them read your project?
+allLegalMoves() creates two arrays, one with as many indices as places on the board to store the legal moves as they are found and then a second that is exactly the length of how many legal moves there are.
+minimaxtree() implements a pruning system where if any move has a high individual score it will return that instead of proceeding further down the tree.
+
+
+Describe the classes, modules, and interfaces you designed before and while you
+implemented the project.  Your description should include:
+  -  A list of the classes your program uses.
+  -  A list of each of the "modules" used in or by MachinePlayer, similar to
+     the list in the "Teamwork" section of the README (but hopefully more
+     detailed).
+  -  For each module, list the class(es) the module is implemented in.
+  -  For each module, say which of your team members implemented it.
+  -  For each module, describe its interface--specifically, the prototype and
+     behavior of each method that is available for external callers (outside
+     the module) to call.  Don't include methods that are only meant to be
+     called from within the module.
+
+     For each method, provide (1) a method prototype and (2) a complete,
+     unambiguous description of the behavior of the method/module.  This
+     description should also appear before the method in your code's comments.
+
+You will probably need to change some of your design decisions as you go; be
+sure to modify this file to reflect these changes before you submit your
+project.  Your design of classes and interfaces with be worth about 10% of your
+Project 2 grade.
+
+
+List of classes:
+Board class
+Chip class
+
+List of methods:
+public boolean hasWon(int color)
+public boolean explore(int color, Chip chip, int length, int dir)
+public void setAllUnvisited()
+public int score(Move m,int color)
+public void forceMove(Move m, int col)
+public boolean isLegalMove(int color, Move move, Board board)
+public boolean isCluster(int color, Move move, Board board)
+public Move[] allLegalMoves(int color, Board board)
+public int minimaxTree(Move m)
+ 
+ 
+Modules:
+
+  1) determine if a board has a netwok for a certain color
+	-In Board.java
+	-By Jiaxin
+	-List of Methods:
+	/**
+	 *It takes in a color and determine whether this 
+	 *color has won on the current board. It calls explore();
+	 *@return True as has won
+	 */ 
+	public boolean hasWon(int color)
+	
+	/**
+	 * This method is called by hasWon(), which helps to determin if 
+	 * there is a network for given color. It looks to every direction
+	 * to find a "neighbor" chip with same color
+	 * 
+	 * @param color is the color we are exploring
+	 * @param chip is the current chip we are standing on
+	 * @param length is the # of chips we have already visited, 
+	 * 		  not including the current one
+	 * @param dir is the previous direction (where we came from
+	 * @return boolean. true for there is a network
+	 * 
+	 */
+	public boolean explore(int color, Chip chip, int length, int dir)
+	
+	/**
+	 * Set all chips on the board to unvisited, called in method hasWon().
+	 */
+	public void setAllUnvisited()
+
+	
+  2)  computing an evaluation function for a board
+	This will be implemented with a method(evaulation()) that will take in a color and run through every legal move and assign a value representing how good of a move it is. It will return the best move.
+	-In Board.java
+	-By Jiaxin
+	-List of Methods:
+	/**
+     * This method will give a score to a move on the current board 
+     * -100 means error
+     * should pass the legal test first!!
+     */
+	public int score(Move m,int color)
+	
+	/**
+	 * This is used in Board.score(), to apply a move to a board. In Board.java The one in MachinePlayer.java will call this one
+	 */
+	 public void forceMove(Move m, int col)
+	
+	
+  3)  determining whether a move is valid,
+	This will be implemented in a methiod(isLegalMove()) that recieves a board pobject, a color, and a move and checks the legality of the move, returns a boolean value.
+ 	-In MachinePlayer.java
+	-By Josh
+	-List of Methods: 
+	/**
+     * This would dertermine if the current move on the board is valid
+     * Will call isCluster().
+     * @param color is the color of chip that we are determine. It is benefitial 
+     * 		if it's an add move, but not step move.
+     * @param move is the move that we need to determine.
+     * @param board is the board... Emm.. Hopefully it's stored internally
+     * @return boolean. True if the move is leagel.
+     * 
+     */
+     public boolean isLegalMove(int color, Move move, Board board)
+     
+    /**
+     * This is to determine whether the current move will form a cluster.
+     * Will be called by isLegalMove().
+     * @param color is the color of chip that we are determine.
+     * @param move is the move that we need to determine.
+     * @param er..board is the board...
+     * @return boolean. true if it will form a cluster
+     * 
+     */
+     public boolean isCluster(int color, Move move, Board board)
+     
+    /**
+     * Generates a list of all legal locations a chip can be placed by
+     * the given color. Does not return step moves differently from adds
+     * Will be called by allLegalMoves().
+     * @param color is the color of chip that we are determine.
+     * @param board is the board
+     * @return array of legal moves
+     * 
+     */
+      public Move[] allLegalMoves(int color, Board board)
+	
+  4)  performing minimax tree search,This will be implemented in a method called minimaxTree() that takes a move and returns an integer score for a given move based on the future board possibilities.
+	-In MachinePlayer.java
+	-By Josh
+	-List of Methods:
+	/**
+     * Searches future boards for the best move available
+     * Prunes if a move gives an extremely high score on its own
+     * Will be called by minimaxTree().
+     * @param m is the given move
+     * @return integer score for given move
+     * 
+     */
+     public int minimaxTree(Move m)
+
+
+
+
+
