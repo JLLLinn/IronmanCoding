@@ -50,13 +50,12 @@ float* rotAbVec(float* vec1, float* vec2, float angle)
     float sine = sin(angle); 
     float cosine = cos(angle);
 	float sq = sqrt(x*x+z*z);
-    // Use the formulas from the above web pages to calculate the parameters of the vector we will return
-   /* float retX = ((i*((i*x)+(j*y)+(k*z)))*(1-cosine) + (L*x*cosine) + (sqrt(L)*(-k*y+j*z)*sine))/L;
+	float retX = ((i*((i*x)+(j*y)+(k*z)))*(1-cosine) + (L*x*cosine) + (sqrt(L)*(-k*y+j*z)*sine))/L;
     float retY = ((j*((i*x)+(j*y)+(k*z)))*(1-cosine) + (L*y*cosine) + (sqrt(L)*(k*x-i*z)*sine))/L;
-    float retZ = ((k*((i*x)+(j*y)+(k*z)))*(1-cosine) + (L*z*cosine) + (sqrt(L)*(-j*x+i*y)*sine))/L;*/
-	float retX = k*(x*z - (x*((cosine*z)/sq - (sine*x*y)/sq))/sq + (y*z*((sine*z)/sq + (cosine*x*y)/sq))/sq) + i*(x*x + (z*((cosine*z)/sq - (sine*x*y)/sq))/sq + (x*y*((sine*z)/sq + (cosine*x*y)/sq))/sq) - j*(((sine*z)/sq + (cosine*x*y)/sq)*(x*x/sq + z*z/sq) - x*y);
+    float retZ = ((k*((i*x)+(j*y)+(k*z)))*(1-cosine) + (L*z*cosine) + (sqrt(L)*(-j*x+i*y)*sine))/L;
+	/*float retX = k*(x*z - (x*((cosine*z)/sq - (sine*x*y)/sq))/sq + (y*z*((sine*z)/sq + (cosine*x*y)/sq))/sq) + i*(x*x + (z*((cosine*z)/sq - (sine*x*y)/sq))/sq + (x*y*((sine*z)/sq + (cosine*x*y)/sq))/sq) - j*(((sine*z)/sq + (cosine*x*y)/sq)*(x*x/sq + z*z/sq) - x*y);
     float retY = i*(x*y + (sine*z*(x*x/sq + z*z/sq))/sq - (cosine*x*y*(x*x/sq + z*z/sq))/sq) - k*((sine*x*(x*x/sq + z*z/sq))/sq - y*z + (cosine*y*z*(x*x/sq + z*z/sq))/sq) + j*(cosine*(sqrt(x*x/sq + z*z/sq)) + y*y);
-    float retZ = k*(z*z + (x*((cosine*x)/sq + (sine*y*z)/sq))/sq - (y*z*((sine*x)/sq - (cosine*y*z)/sq))/sq) - i*((z*((cosine*x)/sq + (sine*y*z)/sq))/sq - x*z + (x*y*((sine*x)/sq - (cosine*y*z)/sq))/sq) + j*(((sine*x)/sq - (cosine*y*z)/sq)*(x*x/sq + z*z/sq) + y*z);
+    float retZ = k*(z*z + (x*((cosine*x)/sq + (sine*y*z)/sq))/sq - (y*z*((sine*x)/sq - (cosine*y*z)/sq))/sq) - i*((z*((cosine*x)/sq + (sine*y*z)/sq))/sq - x*z + (x*y*((sine*x)/sq - (cosine*y*z)/sq))/sq) + j*(((sine*x)/sq - (cosine*y*z)/sq)*(x*x/sq + z*z/sq) + y*z);*/
     float* ret=new float[3];
 	ret[0]=retX;
 	ret[1]=retY;
