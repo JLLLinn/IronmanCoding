@@ -1,0 +1,1 @@
+This is a class project to implementing a machine player, and I find it very interesting. Me and my teammate end up being the top 5 machine players in our class!
