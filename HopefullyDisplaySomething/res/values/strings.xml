@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HopefullyDisplaySomething</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="loading">LOADING......</string>
+    <string name="save_data">Save The Data</string>
+    <string name="start_saving_data">Now Saving Data......</string>
+    <string name="title_activity_light_sensor_list">LightSensorList</string>
+    <string name="show_light_data">Show Light Sensor Saved Data</string>
+    <string name="title_activity_test">TEST</string>
+    <string name="no_data_available">Sorry! No Data Available Yet!</string>
+    <string name="title_activity_acc_sensor_list">AccSensorList</string>
+	<string name="show_acc_data">Show Accelerometer Sensor Saved Data</string>
+</resources>
