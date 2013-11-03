@@ -1,4 +1,4 @@
-This program is a implementation of malloc, realloc and free.
+This program is a implementation of malloc, realloc and free. By Jiaxin Lin
 Metadata for free blocks and a free list is maintained
 
 To compile: "make clean" --> "make"

@@ -1,4 +1,4 @@
-This program is a implementation of mergesort using threads
+This program is my implementation of mergesort using threads
 Interesting and Fun!
 
 To compile: "make clean" --> "make"

@@ -1,5 +1,4 @@
-This program is a homemade shell with basic functions, implemented using process
-
+This program is my homemade shell with basic functions, implemented using process. 
 To compile: "make clean" --> "make"
 
 1. change directory: "cd xxx"

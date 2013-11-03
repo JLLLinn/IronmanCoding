@@ -1,5 +1,5 @@
                              CSCI 2270  Project 2
-                              Network (The Game)
+ By Jiaxin Lin                             Network (The Game)
                        Due 11:55pm Saturday, November 17, 2012
 
 Warning:  This project is substantially more time-consuming than Project 1.
