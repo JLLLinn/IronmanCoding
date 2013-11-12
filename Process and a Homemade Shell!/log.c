@@ -16,10 +16,10 @@
  *   The initialized log structure.
  */
 void log_init(log_t *l) {
-	l->tailEntry = malloc( sizeof(log_entry_t) );
-	l->tailEntry->prev=NULL;
-	l->tailEntry->next=NULL;
-	l->tailEntry->value=NULL;
+	l->tailEntry = malloc(sizeof(log_entry_t));
+	l->tailEntry->prev = NULL;
+	l->tailEntry->next = NULL;
+	l->tailEntry->value = NULL;
 	//printf("Log init successful\n");
 }
 
@@ -38,13 +38,13 @@ void log_destroy(log_t* l) {
 	log_entry_t *cur = l->tailEntry;
 	log_entry_t *mightBeLast = cur;
 
-	for(;cur;){
+	for (; cur;) {
 		free(cur->value);
-		mightBeLast=cur;
-		cur=cur->prev;
-		if(cur){
+		mightBeLast = cur;
+		cur = cur->prev;
+		if (cur) {
 			free(cur->next);
-		}else{
+		} else {
 			free(mightBeLast);
 			break;
 		}
@@ -56,8 +56,8 @@ void log_destroy(log_t* l) {
  *
  *
  * You may assume that:
-* - All pointers will be valid, non-NULL pointer.
-*
+ * - All pointers will be valid, non-NULL pointer.
+ *
  * @param l
  *    Pointer to the log data structure.
  * @param item
@@ -66,27 +66,26 @@ void log_destroy(log_t* l) {
 void log_push(log_t* l, const char *item) {
 	//printf("now pushing command: %s\nprint all the command right now\n",item);
 	//log_printAll(l);
-	size_t cpy = (strlen(item)+1)*sizeof(char);
+	size_t cpy = (strlen(item) + 1) * sizeof(char);
 	char* new = malloc(cpy);
 	memcpy(new,item,cpy);
-	if(!l->tailEntry->value){//if right after init
+	if (!l->tailEntry->value) {	//if right after init
 		l->tailEntry->value = new;
 		return;
 	}
 	log_entry_t *cur = l->tailEntry;
-	cur->next=malloc(sizeof(log_entry_t));
-	cur->next->prev=cur;
+	cur->next = malloc(sizeof(log_entry_t));
+	cur->next->prev = cur;
 	//printf("tail value: %s\ntail prev value: %s\n",cur->next->value,cur->value);
-	cur=cur->next;
-	cur->next=NULL;
+	cur = cur->next;
+	cur->next = NULL;
 	cur->value=new;
-	l->tailEntry=cur;
+	l->tailEntry = cur;
 
 	//printf("print all the command after func\n");
 	//log_printAll(l);
 	//printf("tail value: %s\ntail prev value: %s\n",cur->value,cur->prev->value);
 }
-
 
 /**
  * Preforms a newest-to-oldest search of log entries for an entry matching a
@@ -111,30 +110,29 @@ void log_push(log_t* l, const char *item) {
  *    If no strings has the specified prefix, NULL is returned.
  */
 char *log_search(log_t* l, const char *prefix) {
-	if(!l->tailEntry->value){//if right after init
+	if (!l->tailEntry->value) {	//if right after init
 		return NULL;
 	}
 	log_entry_t *cur = l->tailEntry;
-	for(;cur;cur=cur->prev){
-		if(strncmp(prefix,cur->value,strlen(prefix))==0){
+	for (; cur; cur = cur->prev) {
+		if (strncmp(prefix, cur->value, strlen(prefix)) == 0) {
 			return cur->value;
 		}
 	}
 	return NULL;
 }
 
-
-void log_printAll(log_t *l){
-	if(!l->tailEntry->value){//if right after init
+void log_printAll(log_t *l) {
+	if (!l->tailEntry->value) {	//if right after init
 		return;
 	}
 	log_entry_t *head = l->tailEntry;
-	while(head->prev){
-		head=head->prev;
+	while (head->prev) {
+		head = head->prev;
 	}
 	log_entry_t *cur = head;
-	for(;cur;cur=cur->next){
-		printf("%s\n",cur->value);
+	for (; cur; cur = cur->next) {
+		printf("%s\n", cur->value);
 	}
 	return;
 }

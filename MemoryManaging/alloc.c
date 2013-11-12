@@ -91,11 +91,11 @@ void *malloc(size_t size) {
 		*chosen = (*chosen)->next;
 		return ptr;
 	}
-	dictionary_entry_t *new = sbrk(METADATAS+size);
-	new->size = size;
-	new -> next = NULL;
-	
-	return new->ptr;
+dictionary_entry_t *new = sbrk(METADATAS+size);
+new->size = size;
+new -> next = NULL;
+
+return new->ptr;
 
 }
 
@@ -116,15 +116,15 @@ void *malloc(size_t size) {
  *    passed as argument, no action occurs.
  */
 void free(void *ptr) {
-	// "If a null pointer is passed as argument, no action occurs."
-	if (!ptr)
-		return;
-	
-	dictionary_entry_t * head = (((void*) ptr) - METADATAS);
-	head->next = dictionary;
-	dictionary = head;
-	
+// "If a null pointer is passed as argument, no action occurs."
+if (!ptr)
 	return;
+
+dictionary_entry_t * head = (((void*) ptr) - METADATAS);
+head->next = dictionary;
+dictionary = head;
+
+return;
 }
 
 /**
@@ -174,18 +174,18 @@ void free(void *ptr) {
  */
 void *realloc(void *ptr, size_t size) {
 //printf("%dNow begin reallocing pointer: %p and size: %d\n",testcounter,ptr,size);
-	if (!ptr) {
-		return malloc(size);
-	}
-	if (!size) {
-		free(ptr);
-		return NULL;
-	}
-	dictionary_entry_t *p = (dictionary_entry_t*) (ptr - METADATAS);
-	
-	void *return_ptr = malloc(size);
-	size_t old_size = p->size;
-	memcpy(return_ptr, ptr, (size > old_size ? old_size : size));
+if (!ptr) {
+	return malloc(size);
+}
+if (!size) {
 	free(ptr);
-	return return_ptr;
+	return NULL;
+}
+dictionary_entry_t *p = (dictionary_entry_t*) (ptr - METADATAS);
+
+void *return_ptr = malloc(size);
+size_t old_size = p->size;
+memcpy(return_ptr, ptr, (size > old_size ? old_size : size));
+free(ptr);
+return return_ptr;
 }

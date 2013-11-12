@@ -1,5 +1,5 @@
 /** @file queuetest.c
- */
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,7 +51,7 @@ int main()
 	printf("Top element: %d (expected 12).\n", val2);
 	printf("Total elements: %d (expected 3).\n", priqueue_size(&q));
 
-    int val3 = *((int *)priqueue_poll(&q));
+	int val3 = *((int *)priqueue_poll(&q));
 	printf("Top element: %d (expected 12).\n", val3);
 	printf("Total elements: %d (expected 2).\n", priqueue_size(&q));
 
@@ -72,7 +72,7 @@ int main()
 
 	printf("Elements in order queue (expected 30 20 10): ");
 	while ( priqueue_size(&q2) )
-		  printf("%d ", *((int *)priqueue_poll(&q2)) );
+		printf("%d ", *((int *)priqueue_poll(&q2)) );
 	printf("\n");
 
 	priqueue_destroy(&q2);

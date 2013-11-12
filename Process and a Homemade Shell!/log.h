@@ -3,9 +3,7 @@
 #ifndef __LOG_H_
 #define __LOG_H_
 
-
-typedef struct _log_entry_t
-{
+typedef struct _log_entry_t {
 	struct _log_entry_t *prev;
 	struct _log_entry_t *next;
 	char* value;
@@ -13,9 +11,9 @@ typedef struct _log_entry_t
 } log_entry_t;
 
 typedef struct _log_t {
-	log_entry_t *tailEntry;//this is the tail
+	log_entry_t *tailEntry; //this is the tail
 	int* size;
-    
+
 } log_t;
 
 void log_init(log_t *l);
