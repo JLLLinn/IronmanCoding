@@ -5,13 +5,12 @@
 #include <string.h>
 /** Structure for each dicitonary entry. */
 typedef struct _dictionary_entry_t {
-
 	size_t size;
 	//int free;
-	struct _dictionary_entry_t *next;//this is completed
+	struct _dictionary_entry_t *next; //this is completed
 	char ptr[];
-
 } dictionary_entry_t;
+
 //static int firstinit=1;
 dictionary_entry_t *dictionary = NULL;
 size_t METADATAS = sizeof(dictionary_entry_t);
@@ -40,8 +39,7 @@ size_t METADATAS = sizeof(dictionary_entry_t);
  *
  * @see http://www.cplusplus.com/reference/clibrary/cstdlib/calloc/
  */
-void *calloc(size_t num, size_t size)
-{
+void *calloc(size_t num, size_t size) {
 	/* Note: This function is complete. You do not need to modify it. */
 	void *ptr = malloc(num * size);
 
@@ -50,7 +48,6 @@ void *calloc(size_t num, size_t size)
 
 	return ptr;
 }
-
 
 /**
  * Allocate memory block
@@ -73,24 +70,24 @@ void *calloc(size_t num, size_t size)
  *
  * @see http://www.cplusplus.com/reference/clibrary/cstdlib/malloc/
  */
-void *malloc(size_t size)
-{
+void *malloc(size_t size) {
 	//int freeCounter=fCounter;
 	//1.check to see if we can reuse one of the previous allocated spaces
 	dictionary_entry_t **p = &dictionary;
 	dictionary_entry_t **chosen = NULL;
 
-	while ((*p)!=NULL){
-		if((*p)->size>=size){
-			if(chosen == NULL|| ((*chosen) && (*p)->size < (*chosen)->size)){//find the first match (if is it the first one that I found || if it's not the first, but it's got a small(better)size)
+	while ((*p) != NULL) {
+		if ((*p)->size >= size) {
+			//find the first match (if is it the first one that I found || if it's not the first, but it's got a small(better)size)
+			if (chosen == NULL || ((*chosen) && (*p)->size < (*chosen)->size)) {
 				chosen = p;
 			}
 		}
 		p = &(*p)->next;
 	}
 
-	if(chosen){
-		void *ptr = (*chosen)->ptr;  
+	if (chosen) {
+		void *ptr = (*chosen)->ptr;
 		*chosen = (*chosen)->next;
 		return ptr;
 	}
@@ -99,9 +96,8 @@ void *malloc(size_t size)
 	new -> next = NULL;
 	
 	return new->ptr;
-	
-}
 
+}
 
 /**
  * Deallocate space in memory
@@ -119,19 +115,17 @@ void *malloc(size_t size)
  *    calloc() or realloc() to be deallocated.  If a null pointer is
  *    passed as argument, no action occurs.
  */
-void free(void *ptr)
-{
+void free(void *ptr) {
 	// "If a null pointer is passed as argument, no action occurs."
-    if (!ptr)
-        return;
-
-	dictionary_entry_t * head = (((void*)ptr)-METADATAS);
+	if (!ptr)
+		return;
+	
+	dictionary_entry_t * head = (((void*) ptr) - METADATAS);
 	head->next = dictionary;
 	dictionary = head;
-
-    return;
+	
+	return;
 }
-
 
 /**
  * Reallocate memory block
@@ -178,24 +172,20 @@ void free(void *ptr)
  *
  * @see http://www.cplusplus.com/reference/clibrary/cstdlib/realloc/
  */
-void *realloc(void *ptr, size_t size)
-{
-	//printf("%dNow begin reallocing pointer: %p and size: %d\n",testcounter,ptr,size);
-	if (!ptr){
+void *realloc(void *ptr, size_t size) {
+//printf("%dNow begin reallocing pointer: %p and size: %d\n",testcounter,ptr,size);
+	if (!ptr) {
 		return malloc(size);
 	}
-	if (!size)
-	{
+	if (!size) {
 		free(ptr);
 		return NULL;
 	}
-	dictionary_entry_t *p = (dictionary_entry_t*)(ptr-METADATAS);
+	dictionary_entry_t *p = (dictionary_entry_t*) (ptr - METADATAS);
 	
 	void *return_ptr = malloc(size);
 	size_t old_size = p->size;
-	memcpy(return_ptr, ptr, (size>old_size?old_size:size));
+	memcpy(return_ptr, ptr, (size > old_size ? old_size : size));
 	free(ptr);
 	return return_ptr;
-
-
 }
