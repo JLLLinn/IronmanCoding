@@ -1,0 +1,1 @@
+A little android program I made for testing, which display all the sensors on cellphone and save or load data in SQLite database. Just for testing.
